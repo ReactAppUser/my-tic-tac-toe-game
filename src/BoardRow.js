@@ -1,6 +1,5 @@
 import React from "react";
 
-
 export default function BoardRow(props) {
 
     const summaryArray = props.summaryArray
@@ -18,3 +17,4 @@ export default function BoardRow(props) {
 
     return boardRow
 }
+

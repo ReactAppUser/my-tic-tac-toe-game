@@ -12,7 +12,9 @@ export function Board(props) {
     const squares = props.squares
 
     squares.map((square, index) => {
-        const squareCell = <Square squareNumber={index+1} key={index}/>;
+
+        console.log('square', square);
+        const squareCell = <Square square={square} squareNumber={index+1} key={index} squareValue={props.squareValue} handleClick={props.handleClick}/>;
         if(index < 3) {
             rowOne.push(squareCell);
         }
@@ -31,7 +33,7 @@ export function Board(props) {
 
     return (
         <>
-            <BoardRow summaryArray={summaryArray} />
+            <BoardRow summaryArray={summaryArray}/>
         </>
     )
 }
