@@ -4,6 +4,8 @@ export default function BoardRow(props) {
 
     const summaryArray = props.summaryArray
 
+
+
     const boardRow = summaryArray.map((array, index) => {
 
         const forBoardRow = (
