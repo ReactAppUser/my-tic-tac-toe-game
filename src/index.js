@@ -4,28 +4,7 @@ import {Board} from "./Board";
 import ReactDOM from 'react-dom/client';
 import HistoryTicTacToeGame from './HistoryTicTacToeGame'
 import calculateWinner from './calculateWinner'
-
-async function drawCalculate(turn, winner, message, stringWinner) {
-    const drawMessage = message;
-    const isTurn = turn;
-
-    let promise = new Promise((resolve, reject) => {
-        setTimeout(() => resolve(drawMessage), 100)
-    });
-
-    let result = await promise;
-
-    if (winner && stringWinner) {
-        alert(result)
-    }
-
-    if (isTurn >= 9 && !winner) {
-        alert(result)
-    }
-
-}
-
-
+import drawCalculate from "./drawCalculate";
 
 class Game extends React.Component {
     constructor(props) {
@@ -123,11 +102,19 @@ class Game extends React.Component {
 
 
         const ticTocToeGameWinner = calculateWinner(this.state.squares);
+        const checkIsTurn = this.state.isTurn
+        let draw = null;
+
+        if(checkIsTurn >= 9) {
+            draw = true
+        }
+
         console.log('render', this.state.isTurn)
 
         return (
             <div>
-                {ticTocToeGameWinner? <h1>In TIC-TAC-TOE-GAME winner is player: {ticTocToeGameWinner}</h1>: <h1>TIC-TAC-TOE-GAME</h1>}
+                <h1>{'TIC-TAC-TOE-GAME' + `${(ticTocToeGameWinner)? `${' winner is player: ' + ticTocToeGameWinner}`:(draw&&!ticTocToeGameWinner)?' is the DRAW!':'' }`}</h1>
+                {/*{ticTocToeGameWinner? <h1>In TIC-TAC-TOE-GAME winner is player: {ticTocToeGameWinner}</h1>: <h1>TIC-TAC-TOE-GAME</h1>}*/}
                 <Board squares={this.state.squares} squareValue={this.state.squareValue} handleClick={this.handleClick}/>
                 <HistoryTicTacToeGame nextPlayer={this.state.squareValue}/>
             </div>
