@@ -11,65 +11,60 @@ class Game extends React.Component {
         super(props)
 
         this.state = {
-            squares: Array(9).fill(null),
+            // squares: Array(9).fill(null),
+            squares: [
+                      {value: null, squareStatus: true},{value: null, squareStatus: true},{value: null, squareStatus: true},
+                      {value: null, squareStatus: true},{value: null, squareStatus: true},{value: null, squareStatus: true},
+                      {value: null, squareStatus: true},{value: null, squareStatus: true},{value: null, squareStatus: true}],
             squareValue: 'X',
             isTrueX: true,
             isTurn: 0,
         }
 
-
         this.handleClick = this.handleClick.bind(this);
-
         this.handleSquareValue = this.handleSquareValue.bind(this);
-
-
-        console.log('constructor', this.state.isTurn);
     }
 
-    handleSquareValue(forSquareValue, forIsTrueX) {
-        this.setState((prevState, props) => {
-            return{
-                squareValue: forSquareValue,
-                isTrueX: forIsTrueX,
-            }
-        })
-    }
+     handleSquareValue(forSquareValue, forIsTrueX, squareStatus) {
+         this.setState((prevState, props) => {
+             return{
+                 squareValue: forSquareValue,
+                 isTrueX: forIsTrueX,
+                 squareStatus: squareStatus,
+           }
+         })
+     }
 
     handleClick(event) {
-        const squaresArray = this.state.squares.concat()
+        console.log('this.state.squares', this.state.squares);
+        const squaresArray = this.state.squares.slice();
         const squareValue = this.state.squareValue;
+                console.log('squaresArray', squaresArray);
 
         if(this.state.isTrueX) {
-            this.handleSquareValue('O', false);
+            this.handleSquareValue('O', false, false, squaresArray);
         } else {
-            this.handleSquareValue('X', true);
+            this.handleSquareValue('X', true, false, squaresArray);
         }
 
         const squaresId = +event.target.id - 1;
-        squaresArray[squaresId] = (squareValue);
+
+        console.log('squaresId', squaresId+1);
+        squaresArray[squaresId].value = (squareValue);
+        squaresArray[squaresId].squareStatus = false;
 
         this.setState((prevState, props) => {
-
-            return {
-                squares: squaresArray,
+                return {
+                    isTurn: prevState.isTurn + 1,
+                }
             }
-        })
+        )
 
 
-
-        this.setState((prevState, props) => {
-
-            return {
-                isTurn: prevState.isTurn + 1,
-            }
-        })
-
-        console.log('isTurn', this.state.isTurn)
     }
 
     componentDidUpdate(prevProps, prevState){
         const drawMessage ='The DRAW! You Cane Restart This Game!';
-        const squaresArray = this.state.squares;
         const isTurn = this.state.isTurn;
         const gameWinner = calculateWinner(this.state.squares);
         const winnerMessage = 'Player: ' + gameWinner + ' is WINNER! CONGRATULATION!';
@@ -78,29 +73,7 @@ class Game extends React.Component {
         drawCalculate(isTurn, gameWinner, drawMessage, null);
    }
 
-
-
-    componentDidMount() {
-
-        console.log('componentDidMount', this.state.isTurn)
-    }
-
-    shouldComponentUpdate() {
-
-        console.log('shouldComponentUpdate', this.state.isTurn)
-        return true
-    }
-
-    getSnapshotBeforeUpdate(prevProps, prevState){
-
-
-         console.log('getSnapshotBeforeUpdate', this.state.isTurn)
-        return prevState
-    }
-
     render() {
-
-
         const ticTocToeGameWinner = calculateWinner(this.state.squares);
         const checkIsTurn = this.state.isTurn
         let draw = null;
@@ -109,13 +82,10 @@ class Game extends React.Component {
             draw = true
         }
 
-        console.log('render', this.state.isTurn)
-
         return (
             <div>
                 <h1>{'TIC-TAC-TOE-GAME' + `${(ticTocToeGameWinner)? `${' winner is player: ' + ticTocToeGameWinner}`:(draw&&!ticTocToeGameWinner)?' is the DRAW!':'' }`}</h1>
-                {/*{ticTocToeGameWinner? <h1>In TIC-TAC-TOE-GAME winner is player: {ticTocToeGameWinner}</h1>: <h1>TIC-TAC-TOE-GAME</h1>}*/}
-                <Board squares={this.state.squares} squareValue={this.state.squareValue} handleClick={this.handleClick}/>
+                <Board squares={this.state.squares} squareValue={this.state.squareValue} handleClick={this.handleClick} squareStatus={this.state.squareStatus}/>
                 <HistoryTicTacToeGame nextPlayer={this.state.squareValue}/>
             </div>
         )
@@ -125,3 +95,5 @@ class Game extends React.Component {
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(<Game/>)
+
+

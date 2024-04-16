@@ -4,18 +4,18 @@ import React from "react";
 
 
 export function Board(props) {
-
     const rowOne = [];
     const rowTwo = [];
     const rowThree = [];
 
     const squares = props.squares
 
-    squares.map((square, index) => {
 
+
+    squares.map((square, index) => {
         // console.log('square', square);
 
-        const squareCell = <Square square={square} squareNumber={index+1} key={index} squareValue={props.squareValue} handleClick={props.handleClick}/>;
+        const squareCell = <Square square={square.value} squareNumber={index+1} key={index} squareValue={props.squareValue} handleClick={props.handleClick} squareStatus={square.squareStatus}/>;
         if(index < 3) {
             rowOne.push(squareCell);
         }

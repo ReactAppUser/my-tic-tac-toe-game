@@ -1,4 +1,5 @@
 import React from "react";
+import HistoryButton from "./historyButton";
 
 export default function HistoryTicTacToeGame(props) {
 
@@ -6,7 +7,7 @@ export default function HistoryTicTacToeGame(props) {
         <div>
         <h2>Next player: {props.nextPlayer}</h2>
         <h3>History of the Tic-Tac-Toe-Game:</h3>
-        <button>Go to {props.nextPlayer === 'X'? 'O': "X"}</button>
+
         </div>
     )
 
